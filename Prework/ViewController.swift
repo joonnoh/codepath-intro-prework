@@ -24,6 +24,17 @@ class ViewController: UIViewController {
     // Remember dark mode state for toggling on and off
     var darkModeState: Bool = false
     
+    // Dismiss keyboard when done
+    func dismissInputKeyboard() {
+        InputTextField.resignFirstResponder()
+    }
+    
+    // User press return key to dismiss
+    @IBAction func InputTextFieldReturnKey(_ sender: Any) {
+        print("Keyboard return key pressed.")
+        dismissInputKeyboard()
+    }
+    
     // User press button to change text
     @IBAction func ChangeTextButtonPress(_ sender: Any) {
         print("Change Text button pressed.")
@@ -31,13 +42,13 @@ class ViewController: UIViewController {
         // If input field empty, change text to 'bye'
         if InputTextField.text == "" {
             ChangeTextLabel.text = "Goodbye! 👋"
-            InputTextField.resignFirstResponder()
+            dismissInputKeyboard()
         }
         // If not empty, change text to content within input field and reset
         else {
             ChangeTextLabel.text = InputTextField.text
             InputTextField.text = ""
-            InputTextField.resignFirstResponder()
+            dismissInputKeyboard()
         }
     }
     
@@ -46,7 +57,7 @@ class ViewController: UIViewController {
         print("Background View tapped.")
         
         ChangeTextLabel.text = "Hello from Joon!"
-        InputTextField.resignFirstResponder()
+        dismissInputKeyboard()
     }
     
     // User toggle on and off dark mode
@@ -54,17 +65,19 @@ class ViewController: UIViewController {
         
         // If darkModeState true, set to false and change background color to blue
         if darkModeState {
-            darkModeState = false
             print("Dark Mode Switch toggled off.")
+            darkModeState = false
             DarkModeSwitch.backgroundColor = UIColor.systemBlue
             BackgroundView.backgroundColor = UIColor.systemBlue
+            ChangeTextLabel.textColor = UIColor.white
         }
         // If darkModeState false, set to true and change background color to black
         else {
-            darkModeState = true
             print("Dark Mode Switch toggled on.")
+            darkModeState = true
             DarkModeSwitch.backgroundColor = UIColor.black
             BackgroundView.backgroundColor = UIColor.black
+            ChangeTextLabel.textColor = UIColor.green
         }
     }
 }
